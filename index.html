@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✧(⑅╹▽╹ ) / ✩ 啦啦啦~</title>
+    <link rel="icon" href="img/flower_icon.png">
+    <style>
+
+        /* ========= 基础控制类 ========= */
+        .hidden{
+            display: none !important;
+        }
+
+        .invisible{
+            visibility: hidden;
+        }
+
+
+        .fade-in{
+            opacity: 1 !important;
+
+        }
+
+        .fade-out{
+            opacity: 0;
+        }
+
+        *{
+            user-select: none;
+        }
+
+
+        /* ==============================*/
+
+        /*  悬浮菜单栏部分  */
+
+        #top_menu{
+            position: fixed;
+            top: 0;
+            left: -5px;
+            width: 100%;
+            margin: 15px 0;
+
+            display: flex;
+            justify-content: center;
+        }
+
+        #menu_content_placer{
+            width: 55vh;
+
+            display: flex;
+            justify-content: end;
+            padding: 20px;
+        }
+
+
+        #music_btn{
+            width: 5vh;
+        }
+
+
+
+
+
+        /* 主体 */
+
+
+        #mobie_view{
+            height: 98vh;
+            width: 55vh; /* 形成大概2：1的高宽比 */
+            border: 1px solid black;
+            border-radius: 12px;
+            margin: 0 auto;
+
+        }
+
+        #mobie_view *{
+            background: none;
+            border-radius: 12px;
+        }
+
+
+        /* 封面部分 */
+
+        #cover_page{
+            width: 100%;
+            height: 100%;
+            background-image: url(img/06.jpg);
+            background-size: 50%;
+            
+
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            
+            transition: opacity 0.5s linear;
+        }
+
+        #blending-shadow{
+            /* rgb(100, 97, 83)*/
+            background: linear-gradient(to top, grey, rgba(255, 255, 255, 0));
+
+            background-size: 100%;
+
+            width: 55vh;
+            height: 60%;
+
+            bottom: 0;
+        }
+        
+
+        #tap_to_start{
+            position: absolute;
+
+            height: 13vh;
+
+            bottom: 5%;
+
+
+        }
+
+        #title_img{
+
+            position: absolute;
+            top: 40%;
+
+            height: 10vh;
+        }
+
+        /*  播放器部分 */
+
+        #main_player{
+            width: 100%;
+            height: 100%;
+            align-content: center;
+
+            background-image: url(img/09.jpg);
+            background-repeat: repeat;
+            background-size: contain;
+
+            /*  */
+            opacity: 0;
+            transition: opacity 0.5s linear;
+
+            transition: background-image 2s ease-in-out;
+        }
+ 
+
+        #player_top{
+            height: 30px;
+        }
+
+        #player_screen{
+            width: 95%;
+            aspect-ratio: 1/1 !important;
+            
+            margin: 0 auto;
+            margin-top: 5px;
+        }
+
+        .page{
+            width: 100%;
+
+        }
+
+        #player_buttons_placer{
+            margin: 5px 2cap;
+            margin-top: 20px;
+        }
+        
+        #player_buttons_placer td{
+            width: 30%;
+            display: inline-flex;
+            justify-content: center;
+        }
+
+        .player_button{
+
+            border-radius: 10px;
+
+            width: 100%;
+
+            transition: opacity 0.5s linear; /
+        }
+
+
+        .sentence_to_release{
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        /* ==== 第一页  =====*/ 
+        #page1{
+            background-color: #fff;
+            backdrop-filter: blur(10px);
+            opacity: 0.8;
+            width: 95%;
+            height: 95%;
+            padding: 10px;
+        }
+
+        #text_1_1{
+            margin: 10%;
+            font-size: 120%;
+        }
+
+        #text_1_1 p{
+            color: #67a9df;
+            font-weight: 550;
+            opacity: 0;
+
+        }
+
+        #page2{
+            background-color: none;
+            background-size: contain;
+            opacity: 0.7;
+            width: 95%;
+            height: 95%;
+            padding: 10px;
+        }
+
+        #text_2_1{
+            margin: 10%;
+            font-size: 120%;
+        }
+
+        #text_2_1 p{
+            color: white;
+            font-weight: 550;
+            opacity: 0;
+        }
+        #page3{
+            background-color: none;
+            background-size: contain;
+            opacity: 1;
+            width: 95%;
+            height: 95%;
+            padding: 10px;
+        }
+
+        #text_3_1{
+            margin: 10%;
+            font-size: 120%;
+
+        }
+
+        #text_3_1 p{
+            color: rgb(203, 87, 98);
+            text-shadow: 
+                0 0 0 black, /* 右侧描边 */
+                1px 0 0 rgb(209, 205, 205), /* 左侧描边 */
+                0 0 0 black, /* 下侧描边 */
+                0 -0 0 black; /* 上侧描边 */
+            font-weight: 550;
+            opacity: 0;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+
+        /* ======== 第二页 ==========*/
+
+    </style>
+</head>
+<body onload="start_music()">
+    <audio id="bg_music" autoplay loop>
+        <source src="audio/bg.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="top_menu">
+        <div id="menu_content_placer">
+            <img src="img/music-on.png" alt="" id="music_btn" onclick="toggle_music()">
+        </div>
+    </div>
+
+    <div id="mobie_view">
+        <div id="cover_page" class="" onclick="start_playing()">
+            <img id="title_img" src="img/title.svg" alt="" >
+            <img id="tap_to_start" src="img/点击开始.png" alt="" >
+            <div id="blending-shadow">
+                
+            </div>
+
+
+        </div>
+
+        <div id="main_player" class="hidden">
+            <div id="player_top"></div>
+            <div id="player_screen">
+                <div id="page1" class="page">
+                    <div id="text_1_1">
+                        <p id="sentence_1_1_1"></p>
+                        <p id="sentence_1_1_2"></p>
+                        <p id="sentence_1_1_3"></p>
+                    </div>
+                </div>
+                <div id="page2" class="page hidden">
+                    <div id="text_2_1">
+                        <p></p>
+                        <p></p>
+                        <p></p>
+
+                    </div>
+
+                </div>
+                <div id="page3"  class="page hidden">
+                    <div id="text_3_1">
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <table id="player_buttons_placer">
+                <tr>
+                    <td><img id="backward_button" src="img/Backward-s.png" class="player_button invisible" onclick="previous_page()"></img></td>
+                    <td><button id="test_button" onclick="test_fade(this)" class="hidden">测试fade out</button></td>
+                    <td><button onclick="cancel_invisible()" class="hidden">测试-取消invisible</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><img id="forward_button" src="img/Forward-s.png" class="player_button" onclick="next_page()"></img></td>
+                    
+                </tr>
+                
+            </table>
+
+
+        </div>
+        
+    </div>
+
+    <script>
+        window.page_index = 0;
+        let min_index = 1; 
+        let max_index = 3;
+
+        function start_music(){
+            document.getElementById("bg_music").play();
+        }
+
+        function toggle_music(){
+            let bg_music = document.getElementById("bg_music");
+            let music_btn = document.getElementById("music_btn");
+            let IMG_MUSIC_ON = "img/music-on.png";
+            let IMG_MUSIC_OFF = "img/music-off.png"
+
+            if (bg_music.paused){
+                bg_music.play();
+                music_btn.setAttribute("src", IMG_MUSIC_ON);
+            }else{
+                bg_music.pause();
+                music_btn.setAttribute("src", IMG_MUSIC_OFF);
+            }
+        }
+
+
+        function start_playing(){
+            start_music();  // 在用户有点击后再次确保开音乐，避免被浏览器保护禁止自动播放。
+
+            let cover_page = document.getElementById("cover_page");
+            
+            let main_player = document.getElementById("main_player");
+
+            cover_page.classList.add("fade-out");
+            main_player.classList.remove("hidden");
+            setTimeout(() => {
+                cover_page.classList.add("hidden");
+                main_player.classList.add("fade-in");
+
+                console.log("starting")
+
+                window.page_index = 1;
+
+                load_page(window.page_index);
+            }, 500);
+
+
+        }
+
+        function print(content){
+            console.log(content);
+        }
+
+        function load_page(index=window.page_index){
+            print(`load_page: ${index}`)
+            load_btns(index);
+            let player_screen = document.getElementById("player_screen");
+            console.log("找到的screen:");
+            console.log(player_screen)
+            let pages = player_screen.querySelectorAll(".page");
+
+            console.log(`找到的page `)
+            console.log(pages)
+
+            // 先把所有页都隐藏，然后再根据当前页码去把当前页开起来。
+            for (let item of pages){
+                item.classList.add("hidden");
+            }
+            if (index === 1){
+                document.getElementById("page1").classList.remove("hidden");
+
+                // 清空段落内容，避免首次进入的问题
+                let sentences = document.getElementById("page1").querySelectorAll("p");
+                sentences.forEach(sentence => (sentence.innerText = ""));       
+
+                run_page1_v2();
+            }else if (index === 2){
+                document.getElementById("page2").classList.remove("hidden");
+                run_page2();
+            }else if (index === 3){
+                document.getElementById("page3").classList.remove("hidden");
+                run_page3();
+            }
+        }
+
+        function load_btns(index){
+            // 根据当前页码管理各个按钮的显示状态
+            let backward_button = document.getElementById("backward_button");
+            let forward_button = document.getElementById("forward_button")
+            if (index === min_index){
+                fade_out_element(backward_button);
+                fade_in_element(forward_button);
+            }
+            else if (index === max_index){
+                fade_in_element(backward_button);
+                fade_out_element(forward_button);
+
+            }else{
+                fade_in_element(backward_button);
+                fade_in_element(forward_button);
+            }
+        }
+
+        function fade_out_element(element){
+            // 让某个元素淡出 
+            element.classList.remove("fade-in");
+            element.classList.add("fade-out");
+            setTimeout(() =>{
+                element.classList.add("invisible");
+            }, 1000);
+
+
+        }
+
+        function fade_in_element(element){
+            // 让某个元素淡入
+            element.classList.remove("invisible");
+            element.classList.remove("fade-out");
+            element.classList.add("fade-in");
+
+        }
+
+
+        /* page1 */
+
+        function run_page1(){
+            let GAP_PAGE1 = 2000;   // 第一页的这三个都是2000ms 
+            let page1 = document.getElementById("page1");
+            let sentences = page1.querySelectorAll("p");
+            console.log(sentences)
+
+            for (let i = 0; i <  sentences.length; i++){
+                setTimeout(() => {
+                    fade_in_element(sentences[i]);
+                }, i * GAP_PAGE1);
+                
+            }
+
+        }
+
+        function run_page1_v2() {
+            let BEFORE_PAGE1 = 2000;
+            let GAP = 1000;
+            let page1 = document.getElementById("page1");
+            let main_player = document.getElementById("main_player");
+            main_player.setAttribute("style", "background-image: url(img/09.png);")
+
+            let sentences = page1.querySelectorAll("p");
+            print(sentences)
+            let p1_text = [
+                "嗨，你知道吗，",
+                "今天是大年初一，是一个特别幸运的日子，",
+                "因为二十年前的今天，有一个叫宋丽红的女孩子出生了！"
+            ]
+
+            for (let item of sentences){
+                item.innerText = "";
+            }
+            setTimeout(() => {
+
+
+                async function animateText() {
+                    for (let i = 0; i < sentences.length; i++) {
+                        print(`准备渲染 ${p1_text[i]}`)
+                        await jump_in_sentence(sentences[i], p1_text[i]); // 等待每个句子动画完成
+                        await delay(GAP); // 等待固定的间隔
+                    }
+                }
+
+                animateText();
+            }, BEFORE_PAGE1)
+        }
+
+        async function jump_in_sentence(sentence_obj,text = sentence_obj.innerText) {
+
+            sentence_obj.classList.add("fade-in");
+            sentence_obj.innerText = ""; // 清空文本
+
+            for (let i = 0; i < text.length; i++) {
+                await delay(100); // 控制字的显示速度，延迟 100ms
+                sentence_obj.innerText += text[i];
+                print(`加入 ${text[i]}`)
+            }
+        }
+
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms)); // 返回一个 Promise，控制延迟
+        }
+
+
+
+        function run_page2(){
+            let BEFORE_PAGE2 = 2000;
+            let GAP = 1000;
+            let main_player = document.getElementById("main_player");
+            main_player.setAttribute("style",
+                `
+                background-image: url(img/girl.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+                ` )
+
+
+            let page2 = document.getElementById("page2");
+            let sentences = page2.querySelectorAll("p");
+            print(sentences)
+            let p1_text = [
+                "从那之后，宋丽红开始了磕磕绊绊的生活、在各种事情中成长，",
+                " 经历过悲伤，也路过歧途的岔路口，曾和危险擦肩而过",
+                "庆幸的是，经过了二十年的风雨，最终，有惊无险地，宋丽红长成了现在这样一个特别好的女孩子！"
+            ]
+
+            for (let item of sentences){
+                item.innerText = "";
+            }
+            setTimeout(() => {
+
+
+                async function animateText() {
+                    for (let i = 0; i < sentences.length; i++) {
+                        await jump_in_sentence(sentences[i], p1_text[i]); // 等待每个句子动画完成
+                        await delay(GAP); // 等待固定的间隔
+                    }
+                }
+
+                animateText();
+            }, BEFORE_PAGE2)
+        }
+
+        function run_page3(){
+            let BEFORE_PAGE3 = 3000;
+            let GAP = 1000;
+            let main_player = document.getElementById("main_player");
+            main_player.setAttribute("style",
+                `
+                background-image: url(img/whisper.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+                ` )
+
+
+            let page3 = document.getElementById("page3");
+            let sentences = page3.querySelectorAll("p");
+            print(sentences)
+            let p3_text = [
+                "她曾不确定，曾迷茫，曾低头，但是今天，我们看到的是一个勇敢、智慧、温柔又有些调皮的宋丽红，一个在她独特光芒下，如星辰般灿烂的女孩。",
+                "因为她的存在，世界变得更美好。",
+                "我想把一切最好的祝福送给宋丽红，这个绯红色的女孩子，希望她能一直开开心心的，能保持着自己的这份智慧和活泼，微笑着度过自己的一生!"
+            ]
+
+            for (let item of sentences){
+                item.innerText = "";
+            }
+
+            setTimeout(() => {
+
+                async function animateText() {
+                    for (let i = 0; i < sentences.length; i++) {
+                        await jump_in_sentence(sentences[i], p3_text[i]); // 等待每个句子动画完成
+                        await delay(GAP); // 等待固定的间隔
+                    }
+                }
+
+                animateText();
+            }, BEFORE_PAGE3)
+
+        }
+
+
+
+        /*  测试用  */
+        function test_fade(element){
+    
+            element.classList.remove("fade-in")
+            element.classList.add("fade-out");
+            setTimeout(() => {
+                element.classList.add("invisble")
+            }, 2000); 
+        }
+
+        function cancel_invisible(){
+            let test_button = document.getElementById("test_button");
+            test_button.classList.remove("invisible");
+            test_button.classList.remove("fade-out")
+
+            test_button.classList.add("fade-in")
+        }
+
+
+
+        function next_page(){
+            if (window.page_index + 1 <= max_index){
+                window.page_index += 1;
+                load_page();
+            }
+
+        }
+
+        function previous_page(){
+            if (window.page_index - 1 >= min_index){
+                window.page_index -= 1;
+                load_page();
+            }
+        }
+
+        
+
+
+
+    </script>
+</body>
+</html>
